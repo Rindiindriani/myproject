@@ -7,7 +7,7 @@ class InputRPD:
     def __init__(self, root):
         self.root = root
         self.root.title("Input Data RPD")
-        self.root.geometry("1200x700")
+        self.root.geometry("1600x800")  # Ukuran window lebih besar
         self.root.style = ttk.Style("flatly")
 
         header = ttk.Label(
@@ -44,8 +44,8 @@ class InputRPD:
 
         # STYLE TABLE
         style = ttk.Style()
-        style.configure("Treeview", font=("Segoe UI", 10), rowheight=48, padding=6)
-        style.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
+        style.configure("Treeview", font=("Segoe UI", 11), rowheight=60, padding=8)  # Tinggi baris lebih besar
+        style.configure("Treeview.Heading", font=("Segoe UI", 11, "bold"))  # Font header lebih besar
         style.map("Treeview",
                   background=[("selected", "#4CAF50")],
                   foreground=[("selected", "white")])
@@ -65,27 +65,27 @@ class InputRPD:
 
         # Set column widths - wider for "Uraian", appropriate for others
         column_widths = {
-            "uraian": 250,  # Wider for description text
-            "pagu": 120,
-            "realisasi_sdlalu": 150,
-            "sisa_pagu": 150,
-            "realisasi_ls": 120,
-            "gup_kkp1": 150,
-            "gup_kkp2": 150,
-            "gup_kkp3": 150,
-            "realisasi_gup1": 130,
-            "realisasi_gup2": 130,
-            "realisasi_gup3": 130,
-            "sisa_saldo": 120,
-            "total_realisasi": 130,
+            "uraian": 350,  # Lebih lebar untuk teks deskripsi
+            "pagu": 140,
+            "realisasi_sdlalu": 180,  # Lebih lebar untuk header panjang
+            "sisa_pagu": 180,  # Lebih lebar untuk header panjang
+            "realisasi_ls": 140,
+            "gup_kkp1": 180,  # Lebih lebar untuk header panjang
+            "gup_kkp2": 180,  # Lebih lebar untuk header panjang
+            "gup_kkp3": 180,  # Lebih lebar untuk header panjang
+            "realisasi_gup1": 150,
+            "realisasi_gup2": 150,
+            "realisasi_gup3": 150,
+            "sisa_saldo": 140,
+            "total_realisasi": 150,
         }
 
         for col, head in zip(self.columns, headings):
             self.tree.heading(col, text=head)
-            width = column_widths.get(col, 140)
+            width = column_widths.get(col, 160)
             # Use LEFT anchor for "Uraian" column, CENTER for others
             anchor = "w" if col == "uraian" else CENTER
-            self.tree.column(col, width=width, anchor=anchor, minwidth=80, stretch=True)
+            self.tree.column(col, width=width, anchor=anchor, minwidth=120, stretch=True)  # minwidth lebih besar
 
         # EVENT
         self.tree.bind("<Double-1>", self.edit_cell)
@@ -210,7 +210,7 @@ class InputRPD:
         # Use LEFT justify for "Uraian" column, CENTER for others
         justify_style = "left" if self.columns[col_index] == "uraian" else "center"
         
-        entry = ttk.Entry(self.tree, font=("Segoe UI", 10), justify=justify_style)
+        entry = ttk.Entry(self.tree, font=("Segoe UI", 11), justify=justify_style)  # Font lebih besar
         entry.place(x=x + 1, y=y + 1, width=width - 2, height=height - 2)
         entry.insert(0, value)
         entry.focus()
@@ -288,7 +288,7 @@ class InputRPD:
         self.tree.tag_configure(
             "totalrow",
             background="#E3F2FD",
-            font=("Segoe UI", 10, "bold"),
+            font=("Segoe UI", 11, "bold"),  # Font lebih besar
             foreground="#000000",
         )
         self.tree.see(total_row)
